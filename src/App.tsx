@@ -31,8 +31,6 @@ import {
   Upload,
   Check,
   ChevronDown,
-  Music,
-  VolumeX,
   Heart,
   MessageCircle,
   RotateCcw,
@@ -287,7 +285,7 @@ export const INVITE: InviteConfig = {
     whatsappNumber: '919811000001',
   },
   eventsLayout: 'timeline',
-  events: [
+  events: [ 
     {
       id: 'evt-1',
       name: 'Ghudchadi',
@@ -2428,6 +2426,7 @@ export default function App() {
         audioRef.current.loop = true;
         audioRef.current.volume = 0.35;
       }
+      if (!audioRef.current.paused) return;
       audioRef.current
         .play()
         .then(() => setIsPlayingMusic(true))
@@ -2490,36 +2489,26 @@ export default function App() {
   // Attempt to play music the instant the page loads. Most browsers block
   // audio before any user interaction, so if that attempt is rejected we
   // fall back to starting on the very first tap/click/key anywhere on the
-  // page (not just the envelope seal) so playback begins as early as possible.
-  useEffect(() => {
+  // page (not just the envelope seal). A ref guard (not state, which is
+  // stale inside these closures) ensures this only ever fires once.
+  const hasStartedAudioRef = useRef(false);
+  const tryStartAudioOnce = useCallback(() => {
+    if (hasStartedAudioRef.current) return;
+    hasStartedAudioRef.current = true;
     startAmbientAudio();
+  }, [startAmbientAudio]);
 
-    const tryStartOnFirstInteraction = () => {
-      if (!isPlayingMusic) startAmbientAudio();
-      window.removeEventListener('pointerdown', tryStartOnFirstInteraction);
-      window.removeEventListener('keydown', tryStartOnFirstInteraction);
-      window.removeEventListener('touchstart', tryStartOnFirstInteraction);
-    };
+  useEffect(() => {
+    tryStartAudioOnce();
 
-    window.addEventListener('pointerdown', tryStartOnFirstInteraction);
-    window.addEventListener('keydown', tryStartOnFirstInteraction);
-    window.addEventListener('touchstart', tryStartOnFirstInteraction);
+    window.addEventListener('pointerdown', tryStartAudioOnce);
+    window.addEventListener('keydown', tryStartAudioOnce);
 
     return () => {
-      window.removeEventListener('pointerdown', tryStartOnFirstInteraction);
-      window.removeEventListener('keydown', tryStartOnFirstInteraction);
-      window.removeEventListener('touchstart', tryStartOnFirstInteraction);
+      window.removeEventListener('pointerdown', tryStartAudioOnce);
+      window.removeEventListener('keydown', tryStartAudioOnce);
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
-  const toggleMusic = () => {
-    if (isPlayingMusic) {
-      stopAmbientAudio();
-    } else {
-      startAmbientAudio();
-    }
-  };
+  }, [tryStartAudioOnce]);
 
   // RSVP Step Handlers
   const toggleEventSelection = (id: string) => {
@@ -2684,32 +2673,13 @@ export default function App() {
               setConfettiMode('envelope');
               setConfettiBurst(Date.now());
             }}
-            onStart={startAmbientAudio}
+            onStart={tryStartAudioOnce}
             onComplete={() => {
               setIsOpened(true);
             }}
           />
         )}
       </AnimatePresence>
-
-      {/* FLOATING MUSIC BUTTON (Right Edge, matches reference screenshot) */}
-      {isOpened && invite.wedding.musicUrl.trim() !== '' && (
-        <button
-          type="button"
-          onClick={toggleMusic}
-          aria-label={
-            isPlayingMusic ? 'Pause background music' : 'Play background music'
-          }
-          title={isPlayingMusic ? 'Pause music' : 'Play music'}
-          className="fixed right-3.5 sm:right-5 top-1/2 -translate-y-1/2 z-40 w-9 h-9 rounded-full bg-[#FCFAF6]/90 border border-[#D8C6B0] shadow-[0_6px_20px_rgba(74,47,34,0.12)] flex items-center justify-center text-[#8A6F5A] hover:text-[#4A2F22] transition-transform active:scale-95 cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-[#B58B66]"
-        >
-          {isPlayingMusic ? (
-            <Music className="w-3.5 h-3.5 text-[#B58B66]" />
-          ) : (
-            <VolumeX className="w-3.5 h-3.5 text-[#8A6F5A]" />
-          )}
-        </button>
-      )}
 
       {/* Admin Live Editor Drawer */}
       <AdminConfigDrawer
