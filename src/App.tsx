@@ -238,7 +238,7 @@ export const INVITE: InviteConfig = {
     venue:
       'Shri Dharmik Ram Leela Mandal Inside Shri Kaleshwar Nath Shiv Mandir Mayur Vihar, Patparganj New Delhi – 110091',
     timezone: 'IST',
-    musicUrl: 'SYNTH_CHIME',
+    musicUrl: '/song.mp3',
   },
   story: {
     signatureQuote:
@@ -927,7 +927,8 @@ const EnvelopeIntro: React.FC<{
   invite: InviteConfig;
   onComplete: () => void;
   onTriggerConfetti: () => void;
-}> = ({ invite, onComplete, onTriggerConfetti }) => {
+  onStart: () => void;
+}> = ({ invite, onComplete, onTriggerConfetti, onStart }) => {
   const [stage, setStage] = useState<
     'idle' | 'sealPress' | 'flapOpen' | 'cardRise' | 'exit'
   >('idle');
@@ -950,6 +951,8 @@ const EnvelopeIntro: React.FC<{
 
   const handleOpenEnvelope = useCallback(() => {
     if (stage !== 'idle') return;
+
+    onStart();
 
     if (prefersReducedMotion) {
       onTriggerConfetti();
@@ -986,7 +989,7 @@ const EnvelopeIntro: React.FC<{
       clearTimeout(t3);
       clearTimeout(t4);
     };
-  }, [stage, prefersReducedMotion, onComplete, onTriggerConfetti]);
+  }, [stage, prefersReducedMotion, onComplete, onTriggerConfetti, onStart]);
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
     if (e.key === 'Enter' || e.key === ' ') {
@@ -2655,9 +2658,9 @@ export default function App() {
               setConfettiMode('envelope');
               setConfettiBurst(Date.now());
             }}
+            onStart={startAmbientAudio}
             onComplete={() => {
               setIsOpened(true);
-              startAmbientAudio();
             }}
           />
         )}
