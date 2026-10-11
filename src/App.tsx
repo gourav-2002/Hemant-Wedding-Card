@@ -335,9 +335,11 @@ export const INVITE: InviteConfig = {
     partner2Parents: 'D/o Mr. Mukesh & Mrs. Sonam Aggarwal',
     partner1Role: 'The Groom',
     partner2Role: 'The Bride',
-    partner1Photo: '',
+    partner1Photo:
+      'https://res.cloudinary.com/dqjlffxja/image/upload/v1791705044/Groom_in_Warm_Golden_Bokeh_wb3clb.png',
     partner1SecondaryPhoto: '',
-    partner2Photo: '',
+    partner2Photo:
+      'https://res.cloudinary.com/dqjlffxja/image/upload/v1791705034/Serene_Festive_Saree_Portrait_scyebv.png',
     partner2SecondaryPhoto: '',
     coverPhoto: '',
   },
@@ -2509,7 +2511,6 @@ const CoupleArchCard: React.FC<{
   onUploadSecondary,
 }) => {
   const primaryInputRef = useRef<HTMLInputElement | null>(null);
-  const secondaryInputRef = useRef<HTMLInputElement | null>(null);
 
   const handleFile = (
     e: React.ChangeEvent<HTMLInputElement>,
@@ -2629,44 +2630,6 @@ const CoupleArchCard: React.FC<{
             onChange={(e) => handleFile(e, onUploadPrimary)}
           />
         </div>
-
-        {/* Overlapping Secondary Rectangular Photo at Bottom */}
-        <button
-          type="button"
-          onClick={() => secondaryInputRef.current?.click()}
-          title={`Click to upload secondary photo for ${name}`}
-          aria-label={`Upload secondary detail photo for ${name}`}
-          className="w-28 h-12 sm:w-32 sm:h-13 mx-auto -mt-5 relative z-20 rounded-[4px] p-0.5 bg-[var(--card-bg)] border border-[var(--gold-line)] shadow-md overflow-hidden block cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--name-color)]"
-        >
-          {secondaryPhoto ? (
-            <img
-              src={secondaryPhoto}
-              alt={`${name} detail`}
-              className="w-full h-full object-cover ken-burns-slow"
-            />
-          ) : (
-            <div
-              className="w-full h-full flex items-center justify-center relative overflow-hidden"
-              style={{
-                background:
-                  variant === 'groom'
-                    ? 'linear-gradient(135deg, var(--text-main) 0%, var(--name-color) 100%)'
-                    : 'linear-gradient(135deg, var(--name-color) 0%, var(--accent-primary) 100%)',
-              }}
-            >
-              <span className="font-label text-[7.5px] tracking-[0.26em] text-[#FFFDFB] uppercase">
-                {variant === 'groom' ? 'Royal Attire' : 'Bridal Finery'}
-              </span>
-            </div>
-          )}
-        </button>
-        <input
-          ref={secondaryInputRef}
-          type="file"
-          accept="image/*"
-          className="hidden"
-          onChange={(e) => handleFile(e, onUploadSecondary)}
-        />
       </div>
 
       {/* Name & Role */}
@@ -2864,6 +2827,9 @@ const EnvelopeIntro: React.FC<{
         }
         className="relative flex flex-col items-center"
       >
+        {/* Sacred Ganesha Emblem above the Envelope */}
+        <BlessingSvg type={invite.blessing.headerIcon} />
+
         <div
           className="relative w-[328px] h-[226px] sm:w-[410px] sm:h-[282px]"
           style={{ perspective: '1200px' }}
@@ -5466,62 +5432,6 @@ export default function App() {
         )}
       </AnimatePresence>
 
-      {/* Floating Quick Theme Pill + Studio Edit Button + Audio Control */}
-      <div className="fixed bottom-5 right-5 z-40 flex items-center gap-2.5">
-        {/* Instant Theme Switcher Pill */}
-        <button
-          type="button"
-          onClick={() =>
-            setInvite((prev) => ({
-              ...prev,
-              theme: prev.theme === 'blushRose' ? 'classicCream' : 'blushRose',
-            }))
-          }
-          title="Switch Color Theme (Blush Rose / Classic Cream)"
-          className="h-10 px-3.5 rounded-full bg-[var(--card-bg)]/95 backdrop-blur-md border border-[var(--gold-line)] shadow-lg flex items-center gap-2 font-label text-[9px] tracking-[0.22em] uppercase text-[var(--text-main)] hover:scale-105 transition-transform cursor-pointer"
-        >
-          <span
-            className="w-3 h-3 rounded-full border border-[var(--gold-line)]"
-            style={{
-              background:
-                invite.theme === 'blushRose' ? '#B5586B' : '#B58B66',
-            }}
-          />
-          <span className="hidden sm:inline">
-            {invite.theme === 'blushRose' ? 'Blush Rose' : 'Classic Cream'}
-          </span>
-        </button>
-
-        {/* Background Music / Chime Toggle */}
-        {invite.wedding.musicUrl && (
-          <button
-            type="button"
-            onClick={toggleAudio}
-            aria-label={isPlayingAudio ? 'Mute music' : 'Play music'}
-            title={isPlayingAudio ? 'Mute wedding chime' : 'Play wedding chime'}
-            className="w-10 h-10 rounded-full bg-[var(--card-bg)]/95 backdrop-blur-md border border-[var(--gold-line)] shadow-lg flex items-center justify-center text-[var(--name-color)] hover:scale-105 transition-transform cursor-pointer"
-          >
-            {isPlayingAudio ? (
-              <Music className="w-4 h-4 animate-pulse" />
-            ) : (
-              <VolumeX className="w-4 h-4 text-[var(--text-muted)]" />
-            )}
-          </button>
-        )}
-
-        {/* Open Live Customizer Drawer */}
-        <button
-          type="button"
-          onClick={() => setIsEditDrawerOpen(true)}
-          aria-label="Customize Invitation"
-          title="Customize Invitation Text, Theme & Artwork"
-          className="h-10 px-4 rounded-full bg-[var(--cta-bg)] hover:bg-[var(--cta-hover)] text-[#FFFDFB] border border-[var(--gold-line)]/50 shadow-lg flex items-center gap-2 font-label text-[9.5px] tracking-[0.22em] uppercase font-semibold hover:scale-105 transition-all cursor-pointer"
-        >
-          <Settings className="w-3.5 h-3.5" />
-          <span>Customize</span>
-        </button>
-      </div>
-
       {/* SCREEN 2: FULL ILLUSTRATED INVITATION EXPERIENCE */}
       <motion.main
         initial={{ opacity: 0, y: 24 }}
@@ -5829,141 +5739,6 @@ export default function App() {
               })}
             </div>
           </OrnateCard>
-        </motion.section>
-
-        {/* Ornamental Floral Vine Section Divider */}
-        <FloralCluster placement="divider" />
-
-        {/* SECTION 6: CAPTURED MOMENTS GALLERY + LIGHTBOX */}
-        <motion.section
-          initial={{ opacity: 0, y: 24 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: '-60px' }}
-          transition={{ duration: 0.65 }}
-        >
-          <OrnateCard showFloralCorners>
-            <div className="text-center mb-6">
-              <p className="font-label text-[9.5px] tracking-[0.32em] uppercase text-[var(--name-color)] font-semibold">
-                MEMORIES
-              </p>
-              <h2 className="font-serif text-2xl sm:text-3xl text-[var(--text-main)] mt-1">
-                {invite.labels.galleryTitle}
-              </h2>
-              <p className="font-serif italic text-xs sm:text-sm text-[var(--text-muted)] mt-1">
-                {invite.labels.gallerySubtitle}
-              </p>
-            </div>
-
-            {invite.gallery.length > 0 ? (
-              <div className="grid grid-cols-2 sm:grid-cols-3 gap-3.5">
-                {invite.gallery.map((photo, idx) => (
-                  <button
-                    key={idx}
-                    type="button"
-                    onClick={() => setLightboxIndex(idx)}
-                    className="group relative aspect-[4/5] rounded-[12px] overflow-hidden border border-[var(--gold-line)] shadow-xs cursor-pointer focus:outline-none"
-                  >
-                    <img
-                      src={photo}
-                      alt={`Memory ${idx + 1}`}
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                    />
-                  </button>
-                ))}
-              </div>
-            ) : (
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-                {defaultGalleryPlaceholders.map((item, idx) => (
-                  <button
-                    key={idx}
-                    type="button"
-                    onClick={() => galleryInputRef.current?.click()}
-                    className="group relative aspect-[4/5] rounded-[14px] p-3 bg-[var(--card-bg)] border border-[var(--gold-line)]/70 flex flex-col items-center justify-center text-center overflow-hidden hover:border-[var(--name-color)] transition-colors cursor-pointer"
-                  >
-                    <div
-                      className="absolute inset-0 opacity-45 pointer-events-none"
-                      style={{
-                        background:
-                          'radial-gradient(circle at 50% 30%, var(--bloom-outer) 0%, transparent 70%)',
-                      }}
-                    />
-                    <svg
-                      viewBox="0 0 80 80"
-                      className="w-16 h-16 mb-2 relative z-10 overflow-visible"
-                    >
-                      <Leaf
-                        x={40}
-                        y={42}
-                        rotate={-35}
-                        scale={0.7}
-                        tone="sage"
-                      />
-                      <Leaf
-                        x={40}
-                        y={42}
-                        rotate={35}
-                        scale={0.7}
-                        tone="olive"
-                      />
-                      <Flower
-                        x={40}
-                        y={38}
-                        size={26}
-                        variant="peony"
-                        seed={item.seed}
-                      />
-                    </svg>
-                    <p className="font-serif text-base text-[var(--text-main)] relative z-10">
-                      {item.title}
-                    </p>
-                    <p className="font-label text-[8.5px] tracking-[0.24em] uppercase text-[var(--text-muted)] mt-0.5 relative z-10">
-                      {item.subtitle}
-                    </p>
-                    <span className="mt-3 inline-flex items-center gap-1 font-label text-[8px] tracking-[0.22em] uppercase text-[var(--name-color)] opacity-80 group-hover:opacity-100 relative z-10">
-                      <Upload className="w-3 h-3" />
-                      Tap to upload
-                    </span>
-                  </button>
-                ))}
-              </div>
-            )}
-
-            <div className="mt-5 text-center">
-              <button
-                type="button"
-                onClick={() => galleryInputRef.current?.click()}
-                className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[var(--badge-bg)]/70 border border-[var(--gold-line)] font-label text-[9px] tracking-[0.24em] uppercase text-[var(--name-color)] hover:bg-[var(--badge-bg)] cursor-pointer"
-              >
-                <Upload className="w-3.5 h-3.5" />
-                <span>Add Couple Photos</span>
-              </button>
-              <input
-                ref={galleryInputRef}
-                type="file"
-                accept="image/*"
-                multiple
-                className="hidden"
-                onChange={handleQuickGalleryUpload}
-              />
-            </div>
-          </OrnateCard>
-        </motion.section>
-
-        {/* Ornamental Floral Vine Section Divider */}
-        <FloralCluster placement="divider" />
-
-        {/* SECTION 7: 3-STEP INTERACTIVE RSVP */}
-        <motion.section
-          initial={{ opacity: 0, y: 24 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: '-60px' }}
-          transition={{ duration: 0.65 }}
-        >
-          <RsvpSection
-            invite={invite}
-            submissions={submissions}
-            onSubmitRsvp={handleRsvpSubmitted}
-          />
         </motion.section>
 
         {/* SECTION 8: FLORAL CLOSING FOOTER */}
