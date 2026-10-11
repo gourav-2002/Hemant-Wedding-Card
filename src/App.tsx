@@ -2827,9 +2827,6 @@ const EnvelopeIntro: React.FC<{
         }
         className="relative flex flex-col items-center"
       >
-        {/* Sacred Ganesha Emblem above the Envelope */}
-        <BlessingSvg type={invite.blessing.headerIcon} />
-
         <div
           className="relative w-[328px] h-[226px] sm:w-[410px] sm:h-[282px]"
           style={{ perspective: '1200px' }}
@@ -2980,6 +2977,13 @@ const EnvelopeIntro: React.FC<{
                 strokeWidth="1"
               />
             </svg>
+
+            {/* Sacred Ganesha Emblem embossed on the Flap */}
+            <img
+              src="https://res.cloudinary.com/dqjlffxja/image/upload/v1791712810/hindu_zknbru.png"
+              alt="Lord Ganesha"
+              className="absolute left-1/2 top-[18%] -translate-x-1/2 w-10 h-10 sm:w-12 sm:h-12 object-contain opacity-90"
+            />
           </motion.div>
 
           {/* 5. Glossy Round Wax Seal */}
@@ -5126,12 +5130,12 @@ export default function App() {
     setIsPlayingAudio(false);
   }, []);
 
-  const startAudio = useCallback(() => {
-    if (!invite.wedding.musicUrl) return;
+  const startAudio = useCallback((): Promise<void> | undefined => {
+    if (!invite.wedding.musicUrl) return undefined;
 
     if (invite.wedding.musicUrl === 'SYNTH_CHIME') {
       startSynthChime();
-      return;
+      return Promise.resolve();
     }
 
     if (!audioRef.current) {
@@ -5144,13 +5148,16 @@ export default function App() {
       audioRef.current.volume = invite.wedding.musicVolume ?? 0.5;
     }
 
-    audioRef.current
+    if (!audioRef.current.paused) return Promise.resolve();
+
+    return audioRef.current
       .play()
       .then(() => {
         setIsPlayingAudio(true);
       })
-      .catch(() => {
+      .catch((err) => {
         setIsPlayingAudio(false);
+        throw err;
       });
   }, [
     invite.wedding.musicUrl,
@@ -5158,43 +5165,40 @@ export default function App() {
     startSynthChime,
   ]);
 
-  // Try autoplay on load; if blocked by browser policy, start on the first tap/click/touch anywhere
+  // Try autoplay on load; if blocked by browser policy (true on nearly all
+  // mobile browsers), retry on the first tap/click/key anywhere on the page.
+  // The "started" guard is only set once playback actually succeeds — not
+  // merely attempted — so a failed mount-time attempt doesn't lock out the
+  // real gesture-backed retry, and a real gesture never fires startAudio twice.
+  const hasStartedAudioRef = useRef(false);
   useEffect(() => {
     if (!invite.wedding.musicUrl) return;
 
-    let unlocked = false;
-
-    const removeUnlockListeners = () => {
-      window.removeEventListener('click', handleFirstInteraction);
-      window.removeEventListener('touchstart', handleFirstInteraction);
-      window.removeEventListener('keydown', handleFirstInteraction);
+    const tryStartOnce = () => {
+      if (hasStartedAudioRef.current || userMutedRef.current) return;
+      startAudio()
+        ?.then(() => {
+          hasStartedAudioRef.current = true;
+        })
+        .catch(() => {
+          // Blocked — leave the guard open so the next gesture retries.
+        });
     };
 
-    const handleFirstInteraction = () => {
-      if (unlocked || userMutedRef.current) return;
-      if (audioRef.current && !audioRef.current.paused) {
-        unlocked = true;
-        removeUnlockListeners();
-        return;
-      }
-      startAudio();
-      unlocked = true;
-      removeUnlockListeners();
-    };
+    tryStartOnce();
 
-    // Attempt immediate autoplay on mount
-    startAudio();
-
-    window.addEventListener('click', handleFirstInteraction, { passive: true });
-    window.addEventListener('touchstart', handleFirstInteraction, {
-      passive: true,
-    });
-    window.addEventListener('keydown', handleFirstInteraction, {
-      passive: true,
-    });
+    // iOS Safari's autoplay-unlock allowlist historically only trusts Touch
+    // Events (not Pointer Events), so pointerdown alone misses real phones.
+    window.addEventListener('pointerdown', tryStartOnce, { passive: true });
+    window.addEventListener('touchend', tryStartOnce, { passive: true });
+    window.addEventListener('click', tryStartOnce, { passive: true });
+    window.addEventListener('keydown', tryStartOnce, { passive: true });
 
     return () => {
-      removeUnlockListeners();
+      window.removeEventListener('pointerdown', tryStartOnce);
+      window.removeEventListener('touchend', tryStartOnce);
+      window.removeEventListener('click', tryStartOnce);
+      window.removeEventListener('keydown', tryStartOnce);
       if (synthIntervalRef.current) clearInterval(synthIntervalRef.current);
       if (audioRef.current) audioRef.current.pause();
     };
