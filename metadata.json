@@ -1,0 +1,6 @@
+{
+  "name": "Hemant & Kritika | Wedding Invitation",
+  "description": "A luxury bespoke digital wedding invitation with interactive wax-seal envelope reveal, celebratory countdown, event itinerary, and live RSVP.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
