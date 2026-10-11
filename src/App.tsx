@@ -2487,6 +2487,32 @@ export default function App() {
     };
   }, []);
 
+  // Attempt to play music the instant the page loads. Most browsers block
+  // audio before any user interaction, so if that attempt is rejected we
+  // fall back to starting on the very first tap/click/key anywhere on the
+  // page (not just the envelope seal) so playback begins as early as possible.
+  useEffect(() => {
+    startAmbientAudio();
+
+    const tryStartOnFirstInteraction = () => {
+      if (!isPlayingMusic) startAmbientAudio();
+      window.removeEventListener('pointerdown', tryStartOnFirstInteraction);
+      window.removeEventListener('keydown', tryStartOnFirstInteraction);
+      window.removeEventListener('touchstart', tryStartOnFirstInteraction);
+    };
+
+    window.addEventListener('pointerdown', tryStartOnFirstInteraction);
+    window.addEventListener('keydown', tryStartOnFirstInteraction);
+    window.addEventListener('touchstart', tryStartOnFirstInteraction);
+
+    return () => {
+      window.removeEventListener('pointerdown', tryStartOnFirstInteraction);
+      window.removeEventListener('keydown', tryStartOnFirstInteraction);
+      window.removeEventListener('touchstart', tryStartOnFirstInteraction);
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   const toggleMusic = () => {
     if (isPlayingMusic) {
       stopAmbientAudio();
