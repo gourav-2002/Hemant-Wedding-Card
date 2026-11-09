@@ -1,4 +1,4 @@
-﻿/**
+/**
  * @license
  * SPDX-License-Identifier: Apache-2.0
  */
@@ -82,7 +82,7 @@ export interface WeddingEvent {
   date: string;
   time: string;
   venueAddress: string;
-  dressCode: string;
+  dressCode?: string;
   mapLink: string;
 }
 
@@ -288,15 +288,15 @@ export const TIMEZONE_OPTIONS: {
   label: string;
   offset: string;
 }[] = [
-  { key: 'IST', label: 'India (IST, UTC+5:30)', offset: '+05:30' },
-  { key: 'GST', label: 'UAE (GST, UTC+4:00)', offset: '+04:00' },
-  { key: 'GMT', label: 'UK (GMT/BST, UTC+0:00)', offset: '+00:00' },
-  { key: 'ET', label: 'US Eastern (ET, UTC-5:00)', offset: '-05:00' },
-  { key: 'CT', label: 'US Central (CT, UTC-6:00)', offset: '-06:00' },
-  { key: 'PT', label: 'US Pacific (PT, UTC-8:00)', offset: '-08:00' },
-  { key: 'SGT', label: 'Singapore (SGT, UTC+8:00)', offset: '+08:00' },
-  { key: 'AEST', label: 'Australia (AEST, UTC+10:00)', offset: '+10:00' },
-];
+    { key: 'IST', label: 'India (IST, UTC+5:30)', offset: '+05:30' },
+    { key: 'GST', label: 'UAE (GST, UTC+4:00)', offset: '+04:00' },
+    { key: 'GMT', label: 'UK (GMT/BST, UTC+0:00)', offset: '+00:00' },
+    { key: 'ET', label: 'US Eastern (ET, UTC-5:00)', offset: '-05:00' },
+    { key: 'CT', label: 'US Central (CT, UTC-6:00)', offset: '-06:00' },
+    { key: 'PT', label: 'US Pacific (PT, UTC-8:00)', offset: '-08:00' },
+    { key: 'SGT', label: 'Singapore (SGT, UTC+8:00)', offset: '+08:00' },
+    { key: 'AEST', label: 'Australia (AEST, UTC+10:00)', offset: '+10:00' },
+  ];
 
 export const INVITE: InviteConfig = {
   theme: 'blushRose',
@@ -315,14 +315,14 @@ export const INVITE: InviteConfig = {
     topRightQuote: 'SAME ROOTS BRIGHTER TOMORROWS',
     blessingHeadline: 'WITH THE BLESSINGS OF ALMIGHTY',
     parentsInviteIntro:
-      'Mr. Naresh Aggarwal & Mrs. Poonam Aggarwal cordially invite you to the Wedding Ceremony of their beloved son',
+      'Mr. Naresh Kumar & Mrs. Poonam cordially invite you to the Wedding Ceremony of their beloved son',
     namesConnector: 'with',
     celebrationMessage:
       'Join us as we celebrate a new chapter filled with love, laughter and togetherness',
     infoDayLabel: 'THURSDAY',
     infoDateLabel: '26 NOVEMBER 2026',
-    infoTimeLabel: '3:00 PM ONWARDS',
-    infoVenueShort: 'MAYUR VIHAR, NEW DELHI',
+    infoTimeLabel: '5:00 PM ONWARDS',
+    infoVenueShort: 'Mayur Vihar, Patparganj, New Delhi',
     graciousPresenceLine:
       'Your gracious presence will make this occasion more special for us.',
     scanLocationLabel: 'Scan for Location',
@@ -330,9 +330,9 @@ export const INVITE: InviteConfig = {
   },
   couple: {
     partner1Name: 'Hemant',
-    partner1Parents: 'S/o Mr. Naresh & Mrs. Poonam Aggarwal',
+    partner1Parents: 'Son of Mrs. Poonam and Mr. Naresh Kumar',
     partner2Name: 'Kritika',
-    partner2Parents: 'D/o Mr. Mukesh & Mrs. Sonam Aggarwal',
+    partner2Parents: 'Daughter of Mrs. Sonam and Mr. Mukesh Kumar',
     partner1Role: 'The Groom',
     partner2Role: 'The Bride',
     partner1Photo:
@@ -361,15 +361,15 @@ export const INVITE: InviteConfig = {
     date: 'November 26, 2026',
     isoDate: '2026-11-26T15:00:00',
     venue:
-      'Shri Dharmik Ram Leela Mandal, Inside Shri Kaleshwar Nath Shiv Mandir, Mayur Vihar, Patparganj, New Delhi – 110091',
-    venueMapLink: 'https://maps.app.goo.gl/EWvdgepEFwvTTZma9',
+      'Shri Dharmik Ramlila Mandal Alongside Shri Kaleshwar Nath Shiv Mandir Mayur Vihar, Patparganj, New Delhi – 110091',
+    venueMapLink: 'https://maps.app.goo.gl/3YB6mXdcPPK8zN5z5',
     timezone: 'IST',
     musicUrl: '/song.mp3',
     musicVolume: 0.5,
   },
   hosts: [
     {
-      name: 'Mr. Naresh Kumar Aggarwal',
+      name: 'Mr. Naresh Kumar',
       relation: 'Father of the Groom',
       phone: '+91 98109 54538',
     },
@@ -447,17 +447,17 @@ export const INVITE: InviteConfig = {
       time: '3:00 PM onwards',
       venueAddress:
         'H. No. 29, Block-D Urvashi Enclave, Near Vardhan Multispeciality Hospital, Ghaziabad, Uttar Pradesh – 201018',
-      dressCode: 'Traditional',
+
       mapLink: 'https://maps.google.com/maps?q=28.7069186,77.444319&z=17&hl=en',
     },
     {
       id: 'evt-2',
       name: 'Departure of Barat',
       date: 'November 26, 2026',
-      time: '6:00 PM onwards',
+      time: '5:00 PM onwards',
       venueAddress:
         'H. No. 29, Block-D Urvashi Enclave, Near Vardhan Multispeciality Hospital, Ghaziabad, Uttar Pradesh – 201018',
-      dressCode: 'Traditional',
+
       mapLink: 'https://maps.google.com/maps?q=28.7069186,77.444319&z=17&hl=en',
     },
   ],
@@ -1354,9 +1354,8 @@ const PalaceVenueBand: React.FC<{ customPhoto?: string }> = ({
               return (
                 <path
                   key={`uw-${idx}`}
-                  d={`M${wx} 70 L${wx} 55 A6.5 6.5 0 0 1 ${wx + 13} 55 L${
-                    wx + 13
-                  } 70 Z`}
+                  d={`M${wx} 70 L${wx} 55 A6.5 6.5 0 0 1 ${wx + 13} 55 L${wx + 13
+                    } 70 Z`}
                   fill="url(#windowWarmth)"
                 />
               );
@@ -1369,13 +1368,10 @@ const PalaceVenueBand: React.FC<{ customPhoto?: string }> = ({
               return (
                 <path
                   key={`lw-${idx}`}
-                  d={`M${wx} 112 L${wx} ${isCenter ? 84 : 88} A${
-                    isCenter ? 10 : 8
-                  } ${isCenter ? 10 : 8} 0 0 1 ${
-                    wx + (isCenter ? 20 : 16)
-                  } ${isCenter ? 84 : 88} L${
-                    wx + (isCenter ? 20 : 16)
-                  } 112 Z`}
+                  d={`M${wx} 112 L${wx} ${isCenter ? 84 : 88} A${isCenter ? 10 : 8
+                    } ${isCenter ? 10 : 8} 0 0 1 ${wx + (isCenter ? 20 : 16)
+                    } ${isCenter ? 84 : 88} L${wx + (isCenter ? 20 : 16)
+                    } 112 Z`}
                   fill="url(#windowWarmth)"
                 />
               );
@@ -2510,138 +2506,137 @@ const CoupleArchCard: React.FC<{
   onUploadPrimary,
   onUploadSecondary,
 }) => {
-  const primaryInputRef = useRef<HTMLInputElement | null>(null);
+    const primaryInputRef = useRef<HTMLInputElement | null>(null);
 
-  const handleFile = (
-    e: React.ChangeEvent<HTMLInputElement>,
-    cb: (b64: string) => void
-  ) => {
-    const file = e.target.files?.[0];
-    if (!file) return;
-    const reader = new FileReader();
-    reader.onload = () => {
-      if (typeof reader.result === 'string') cb(reader.result);
+    const handleFile = (
+      e: React.ChangeEvent<HTMLInputElement>,
+      cb: (b64: string) => void
+    ) => {
+      const file = e.target.files?.[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = () => {
+        if (typeof reader.result === 'string') cb(reader.result);
+      };
+      reader.readAsDataURL(file);
     };
-    reader.readAsDataURL(file);
-  };
 
-  return (
-    <div className="flex flex-col items-center group relative">
-      {/* Delicate Mini Floral Sprig on Arch Shoulder */}
-      <div
-        className={`absolute -top-2 ${
-          variant === 'groom' ? '-left-2' : '-right-2'
-        } z-30 pointer-events-none`}
-        aria-hidden="true"
-      >
-        <svg viewBox="0 0 48 48" className="w-11 h-11 overflow-visible">
-          <Leaf x={24} y={24} rotate={variant === 'groom' ? -45 : 45} scale={0.55} tone="sage" />
-          <Flower
-            x={24}
-            y={22}
-            size={14}
-            variant="peony"
-            seed={variant === 'groom' ? 14 : 28}
-          />
-        </svg>
-      </div>
-
-      {/* Arch Frame Container */}
-      <div className="relative pt-2 pb-7 px-2">
+    return (
+      <div className="flex flex-col items-center group relative">
+        {/* Delicate Mini Floral Sprig on Arch Shoulder */}
         <div
-          className="w-36 h-44 sm:w-40 sm:h-48 rounded-t-full p-1.5 border border-[var(--gold-line)] bg-[var(--card-bg)] relative shadow-[0_16px_40px_rgba(107,51,64,0.12)]"
-          style={{
-            borderTopLeftRadius: '9999px',
-            borderTopRightRadius: '9999px',
-            borderBottomLeftRadius: '8px',
-            borderBottomRightRadius: '8px',
-          }}
+          className={`absolute -top-2 ${variant === 'groom' ? '-left-2' : '-right-2'
+            } z-30 pointer-events-none`}
+          aria-hidden="true"
         >
-          {/* Small Triangle Pin on top center of the arch */}
-          <div
-            className="absolute -top-1.5 left-1/2 -translate-x-1/2 z-20 text-[var(--gold-line)]"
-            aria-hidden="true"
-          >
-            <svg width="10" height="7" viewBox="0 0 10 7" fill="currentColor">
-              <polygon points="0,0 10,0 5,6.5" />
-            </svg>
-          </div>
+          <svg viewBox="0 0 48 48" className="w-11 h-11 overflow-visible">
+            <Leaf x={24} y={24} rotate={variant === 'groom' ? -45 : 45} scale={0.55} tone="sage" />
+            <Flower
+              x={24}
+              y={22}
+              size={14}
+              variant="peony"
+              seed={variant === 'groom' ? 14 : 28}
+            />
+          </svg>
+        </div>
 
-          {/* Inner Arch Image Slot with Slow Ken Burns */}
-          <button
-            type="button"
-            onClick={() => primaryInputRef.current?.click()}
-            title={`Click to upload ${name}'s portrait`}
-            aria-label={`Upload portrait photo for ${name}`}
-            className="w-full h-full overflow-hidden relative block cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--name-color)]"
+        {/* Arch Frame Container */}
+        <div className="relative pt-2 pb-7 px-2">
+          <div
+            className="w-36 h-44 sm:w-40 sm:h-48 rounded-t-full p-1.5 border border-[var(--gold-line)] bg-[var(--card-bg)] relative shadow-[0_16px_40px_rgba(107,51,64,0.12)]"
             style={{
               borderTopLeftRadius: '9999px',
               borderTopRightRadius: '9999px',
-              borderBottomLeftRadius: '4px',
-              borderBottomRightRadius: '4px',
+              borderBottomLeftRadius: '8px',
+              borderBottomRightRadius: '8px',
             }}
           >
-            {primaryPhoto ? (
-              <img
-                src={primaryPhoto}
-                alt={name}
-                className="w-full h-full object-cover ken-burns-slow"
-              />
-            ) : (
-              <div
-                className="w-full h-full flex flex-col items-center justify-center relative ken-burns-slow"
-                style={{
-                  background:
-                    'radial-gradient(circle at 50% 35%, var(--card-bg) 0%, var(--badge-bg) 65%, var(--bloom-outer) 100%)',
-                }}
-              >
-                <svg
-                  viewBox="0 0 100 120"
-                  className="w-full h-full absolute inset-0 text-[var(--text-main)]/10"
-                  fill="none"
-                >
-                  <circle
-                    cx="50"
-                    cy="48"
-                    r="32"
-                    stroke="currentColor"
-                    strokeWidth="0.7"
-                  />
-                  <path
-                    d="M20 115 C20 86, 80 86, 80 115"
-                    stroke="currentColor"
-                    strokeWidth="0.8"
-                  />
-                </svg>
-                <span className="font-script text-5xl text-[var(--name-color)] select-none relative z-10">
-                  {initial}
-                </span>
-                <span className="font-label text-[8px] tracking-[0.25em] uppercase text-[var(--text-muted)] mt-1 relative z-10 opacity-85 group-hover:opacity-100">
-                  Tap to add photo
-                </span>
-              </div>
-            )}
-          </button>
-          <input
-            ref={primaryInputRef}
-            type="file"
-            accept="image/*"
-            className="hidden"
-            onChange={(e) => handleFile(e, onUploadPrimary)}
-          />
-        </div>
-      </div>
+            {/* Small Triangle Pin on top center of the arch */}
+            <div
+              className="absolute -top-1.5 left-1/2 -translate-x-1/2 z-20 text-[var(--gold-line)]"
+              aria-hidden="true"
+            >
+              <svg width="10" height="7" viewBox="0 0 10 7" fill="currentColor">
+                <polygon points="0,0 10,0 5,6.5" />
+              </svg>
+            </div>
 
-      {/* Name & Role */}
-      <h3 className="font-serif text-lg sm:text-xl text-[var(--text-main)] tracking-wide mt-0.5">
-        {name}
-      </h3>
-      <p className="font-label text-[9px] tracking-[0.3em] uppercase text-[var(--text-muted)] mt-1">
-        {role}
-      </p>
-    </div>
-  );
-};
+            {/* Inner Arch Image Slot with Slow Ken Burns */}
+            <button
+              type="button"
+              onClick={() => primaryInputRef.current?.click()}
+              title={`Click to upload ${name}'s portrait`}
+              aria-label={`Upload portrait photo for ${name}`}
+              className="w-full h-full overflow-hidden relative block cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--name-color)]"
+              style={{
+                borderTopLeftRadius: '9999px',
+                borderTopRightRadius: '9999px',
+                borderBottomLeftRadius: '4px',
+                borderBottomRightRadius: '4px',
+              }}
+            >
+              {primaryPhoto ? (
+                <img
+                  src={primaryPhoto}
+                  alt={name}
+                  className="w-full h-full object-cover ken-burns-slow"
+                />
+              ) : (
+                <div
+                  className="w-full h-full flex flex-col items-center justify-center relative ken-burns-slow"
+                  style={{
+                    background:
+                      'radial-gradient(circle at 50% 35%, var(--card-bg) 0%, var(--badge-bg) 65%, var(--bloom-outer) 100%)',
+                  }}
+                >
+                  <svg
+                    viewBox="0 0 100 120"
+                    className="w-full h-full absolute inset-0 text-[var(--text-main)]/10"
+                    fill="none"
+                  >
+                    <circle
+                      cx="50"
+                      cy="48"
+                      r="32"
+                      stroke="currentColor"
+                      strokeWidth="0.7"
+                    />
+                    <path
+                      d="M20 115 C20 86, 80 86, 80 115"
+                      stroke="currentColor"
+                      strokeWidth="0.8"
+                    />
+                  </svg>
+                  <span className="font-script text-5xl text-[var(--name-color)] select-none relative z-10">
+                    {initial}
+                  </span>
+                  <span className="font-label text-[8px] tracking-[0.25em] uppercase text-[var(--text-muted)] mt-1 relative z-10 opacity-85 group-hover:opacity-100">
+                    Tap to add photo
+                  </span>
+                </div>
+              )}
+            </button>
+            <input
+              ref={primaryInputRef}
+              type="file"
+              accept="image/*"
+              className="hidden"
+              onChange={(e) => handleFile(e, onUploadPrimary)}
+            />
+          </div>
+        </div>
+
+        {/* Name & Role */}
+        <h3 className="font-serif text-lg sm:text-xl text-[var(--text-main)] tracking-wide mt-0.5">
+          {name}
+        </h3>
+        <p className="font-label text-[9px] tracking-[0.3em] uppercase text-[var(--text-muted)] mt-1">
+          {role}
+        </p>
+      </div>
+    );
+  };
 
 const CountdownCircle: React.FC<{ value: number; label: string }> = ({
   value,
@@ -2859,8 +2854,8 @@ const EnvelopeIntro: React.FC<{
               stage === 'cardRise' || stage === 'exit'
                 ? { y: -86, opacity: 1, scale: 1 }
                 : stage === 'flapOpen'
-                ? { y: -12, opacity: 1, scale: 0.98 }
-                : { y: 12, opacity: 0.92, scale: 0.96 }
+                  ? { y: -12, opacity: 1, scale: 0.98 }
+                  : { y: 12, opacity: 0.92, scale: 0.96 }
             }
             transition={{
               duration: 1.15,
@@ -2994,9 +2989,9 @@ const EnvelopeIntro: React.FC<{
                   animate={
                     !prefersReducedMotion
                       ? {
-                          scale: [1, 1.24, 1.32],
-                          opacity: [0.42, 0.15, 0],
-                        }
+                        scale: [1, 1.24, 1.32],
+                        opacity: [0.42, 0.15, 0],
+                      }
                       : {}
                   }
                   transition={{
@@ -3036,8 +3031,8 @@ const EnvelopeIntro: React.FC<{
                     stage === 'sealPress'
                       ? { scale: 0.9, opacity: 0 }
                       : !prefersReducedMotion
-                      ? { scale: [1, 1.03, 1] }
-                      : { scale: 1 }
+                        ? { scale: [1, 1.03, 1] }
+                        : { scale: 1 }
                   }
                   transition={
                     stage === 'sealPress'
@@ -3064,9 +3059,8 @@ const EnvelopeIntro: React.FC<{
                     aria-hidden="true"
                   />
                   <span
-                    className={`font-serif italic text-xl sm:text-2xl tracking-wider flex items-baseline justify-center relative z-10 select-none ${
-                      isBlush ? 'text-[#FFF8F3]' : 'text-[#3E2519]'
-                    }`}
+                    className={`font-serif italic text-xl sm:text-2xl tracking-wider flex items-baseline justify-center relative z-10 select-none ${isBlush ? 'text-[#FFF8F3]' : 'text-[#3E2519]'
+                      }`}
                   >
                     {monogramParts.hasAmp ? (
                       <>
@@ -3137,79 +3131,79 @@ const OrnateCard: React.FC<{
   innerClassName = 'p-6 sm:p-10',
   showFloralCorners = false,
 }) => (
-  <div
-    className={`relative rounded-[20px] bg-[var(--card-bg)] shadow-[0_20px_50px_rgba(107,51,64,0.11)] p-2 sm:p-2.5 transition-colors duration-500 ${className}`}
-  >
-    {/* Outer Thin Gold Border */}
-    <div className="relative rounded-[14px] border border-[var(--gold-line)] p-1">
-      {/* Inner Hairline Border */}
-      <div
-        className={`relative rounded-[11px] border border-[var(--border-hairline)] bg-[var(--card-inner)]/65 ${innerClassName}`}
-      >
-        {/* Tiny Gold Corner Flourishes */}
-        {(['tl', 'tr', 'bl', 'br'] as const).map((pos) => {
-          const posMap = {
-            tl: 'top-1.5 left-1.5 rotate-0',
-            tr: 'top-1.5 right-1.5 rotate-90',
-            bl: 'bottom-1.5 left-1.5 -rotate-90',
-            br: 'bottom-1.5 right-1.5 rotate-180',
-          };
-          return (
-            <svg
-              key={pos}
-              viewBox="0 0 24 24"
-              className={`w-4 h-4 text-[var(--gold-line)] pointer-events-none select-none absolute ${posMap[pos]}`}
-              fill="none"
-              aria-hidden="true"
-            >
-              <path
-                d="M2 16 L2 4 Q2 2 4 2 L16 2"
-                stroke="currentColor"
-                strokeWidth="1.2"
-                strokeLinecap="round"
-              />
-              <path
-                d="M5 11 L5 5 L11 5"
-                stroke="currentColor"
-                strokeWidth="0.75"
-                strokeLinecap="round"
-                opacity="0.7"
-              />
-              <circle cx="2.5" cy="2.5" r="1.2" fill="currentColor" />
-            </svg>
-          );
-        })}
-
-        {/* Optional Delicate Floral Accent on Top-Left & Bottom-Right */}
-        {showFloralCorners && (
-          <>
-            <div
-              className="absolute -top-3 -left-3 w-12 h-12 pointer-events-none z-10"
-              aria-hidden="true"
-            >
-              <svg viewBox="0 0 50 50" className="w-full h-full overflow-visible">
-                <Leaf x={22} y={24} rotate={-45} scale={0.52} tone="sage" />
-                <Leaf x={28} y={20} rotate={25} scale={0.45} tone="olive" />
-                <Flower x={22} y={22} size={15} variant="peony" seed={41} />
+    <div
+      className={`relative rounded-[20px] bg-[var(--card-bg)] shadow-[0_20px_50px_rgba(107,51,64,0.11)] p-2 sm:p-2.5 transition-colors duration-500 ${className}`}
+    >
+      {/* Outer Thin Gold Border */}
+      <div className="relative rounded-[14px] border border-[var(--gold-line)] p-1">
+        {/* Inner Hairline Border */}
+        <div
+          className={`relative rounded-[11px] border border-[var(--border-hairline)] bg-[var(--card-inner)]/65 ${innerClassName}`}
+        >
+          {/* Tiny Gold Corner Flourishes */}
+          {(['tl', 'tr', 'bl', 'br'] as const).map((pos) => {
+            const posMap = {
+              tl: 'top-1.5 left-1.5 rotate-0',
+              tr: 'top-1.5 right-1.5 rotate-90',
+              bl: 'bottom-1.5 left-1.5 -rotate-90',
+              br: 'bottom-1.5 right-1.5 rotate-180',
+            };
+            return (
+              <svg
+                key={pos}
+                viewBox="0 0 24 24"
+                className={`w-4 h-4 text-[var(--gold-line)] pointer-events-none select-none absolute ${posMap[pos]}`}
+                fill="none"
+                aria-hidden="true"
+              >
+                <path
+                  d="M2 16 L2 4 Q2 2 4 2 L16 2"
+                  stroke="currentColor"
+                  strokeWidth="1.2"
+                  strokeLinecap="round"
+                />
+                <path
+                  d="M5 11 L5 5 L11 5"
+                  stroke="currentColor"
+                  strokeWidth="0.75"
+                  strokeLinecap="round"
+                  opacity="0.7"
+                />
+                <circle cx="2.5" cy="2.5" r="1.2" fill="currentColor" />
               </svg>
-            </div>
-            <div
-              className="absolute -bottom-3 -right-3 w-12 h-12 pointer-events-none z-10"
-              aria-hidden="true"
-            >
-              <svg viewBox="0 0 50 50" className="w-full h-full overflow-visible">
-                <Leaf x={28} y={26} rotate={135} scale={0.52} tone="sage" />
-                <Flower x={28} y={28} size={14} variant="ivoryRose" seed={52} />
-              </svg>
-            </div>
-          </>
-        )}
+            );
+          })}
 
-        {children}
+          {/* Optional Delicate Floral Accent on Top-Left & Bottom-Right */}
+          {showFloralCorners && (
+            <>
+              <div
+                className="absolute -top-3 -left-3 w-12 h-12 pointer-events-none z-10"
+                aria-hidden="true"
+              >
+                <svg viewBox="0 0 50 50" className="w-full h-full overflow-visible">
+                  <Leaf x={22} y={24} rotate={-45} scale={0.52} tone="sage" />
+                  <Leaf x={28} y={20} rotate={25} scale={0.45} tone="olive" />
+                  <Flower x={22} y={22} size={15} variant="peony" seed={41} />
+                </svg>
+              </div>
+              <div
+                className="absolute -bottom-3 -right-3 w-12 h-12 pointer-events-none z-10"
+                aria-hidden="true"
+              >
+                <svg viewBox="0 0 50 50" className="w-full h-full overflow-visible">
+                  <Leaf x={28} y={26} rotate={135} scale={0.52} tone="sage" />
+                  <Flower x={28} y={28} size={14} variant="ivoryRose" seed={52} />
+                </svg>
+              </div>
+            </>
+          )}
+
+          {children}
+        </div>
       </div>
     </div>
-  </div>
-);
+  );
 
 const EventsDisplay: React.FC<{
   events: WeddingEvent[];
@@ -3245,9 +3239,8 @@ const EventsDisplay: React.FC<{
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: '-40px' }}
                 transition={{ duration: 0.55, delay: idx * 0.08 }}
-                className={`relative flex flex-col sm:flex-row items-start ${
-                  isEven ? 'sm:flex-row' : 'sm:flex-row-reverse'
-                }`}
+                className={`relative flex flex-col sm:flex-row items-start ${isEven ? 'sm:flex-row' : 'sm:flex-row-reverse'
+                  }`}
               >
                 {/* Pulsing Gold & Rose Node on Timeline */}
                 <div
@@ -3260,17 +3253,15 @@ const EventsDisplay: React.FC<{
 
                 {/* Card Half */}
                 <div
-                  className={`w-full sm:w-1/2 pl-11 sm:pl-0 ${
-                    isEven ? 'sm:pr-9 sm:text-right' : 'sm:pl-9 sm:text-left'
-                  }`}
+                  className={`w-full sm:w-1/2 pl-11 sm:pl-0 ${isEven ? 'sm:pr-9 sm:text-right' : 'sm:pl-9 sm:text-left'
+                    }`}
                 >
                   <div className="relative rounded-[14px] bg-[var(--card-bg)] border border-[var(--gold-line)]/65 p-5 shadow-[0_12px_32px_rgba(107,51,64,0.08)] hover:border-[var(--name-color)]/60 transition-colors overflow-hidden">
                     {/* Subtle Corner Rose Motif inside Event Card */}
                     <svg
                       viewBox="0 0 60 60"
-                      className={`w-14 h-14 absolute -top-2 ${
-                        isEven ? '-left-2' : '-right-2'
-                      } opacity-35 pointer-events-none`}
+                      className={`w-14 h-14 absolute -top-2 ${isEven ? '-left-2' : '-right-2'
+                        } opacity-35 pointer-events-none`}
                       aria-hidden="true"
                     >
                       <Flower x={30} y={30} size={22} variant="peony" seed={idx + 10} />
@@ -3285,9 +3276,8 @@ const EventsDisplay: React.FC<{
                     </h3>
 
                     <div
-                      className={`mt-3 space-y-2 text-xs sm:text-sm text-[var(--text-muted)] flex flex-col ${
-                        isEven ? 'sm:items-end' : 'sm:items-start'
-                      }`}
+                      className={`mt-3 space-y-2 text-xs sm:text-sm text-[var(--text-muted)] flex flex-col ${isEven ? 'sm:items-end' : 'sm:items-start'
+                        }`}
                     >
                       <div className="flex items-center gap-2">
                         <Clock className="w-3.5 h-3.5 text-[var(--name-color)] shrink-0" />
@@ -3302,9 +3292,8 @@ const EventsDisplay: React.FC<{
                       )}
 
                       <div
-                        className={`flex items-start gap-2 ${
-                          isEven ? 'sm:flex-row-reverse' : ''
-                        }`}
+                        className={`flex items-start gap-2 ${isEven ? 'sm:flex-row-reverse' : ''
+                          }`}
                       >
                         <MapPin className="w-3.5 h-3.5 text-[var(--name-color)] shrink-0 mt-0.5" />
                         <span className="leading-relaxed">
@@ -3361,9 +3350,8 @@ const EventsDisplay: React.FC<{
                   </h3>
                 </div>
                 <ChevronDown
-                  className={`w-4 h-4 text-[var(--name-color)] transition-transform duration-300 ${
-                    isOpen ? 'rotate-180' : ''
-                  }`}
+                  className={`w-4 h-4 text-[var(--name-color)] transition-transform duration-300 ${isOpen ? 'rotate-180' : ''
+                    }`}
                 />
               </button>
 
@@ -3619,13 +3607,12 @@ const RsvpSection: React.FC<{
           {[1, 2].map((s) => (
             <div key={s} className="flex items-center gap-2">
               <span
-                className={`w-6 h-6 rounded-full font-label text-[10px] flex items-center justify-center border transition-colors ${
-                  step === s
-                    ? 'bg-[var(--cta-bg)] text-[#FFFDFB] border-[var(--cta-bg)]'
-                    : step > s
+                className={`w-6 h-6 rounded-full font-label text-[10px] flex items-center justify-center border transition-colors ${step === s
+                  ? 'bg-[var(--cta-bg)] text-[#FFFDFB] border-[var(--cta-bg)]'
+                  : step > s
                     ? 'bg-[var(--badge-bg)] text-[var(--name-color)] border-[var(--gold-line)]'
                     : 'bg-transparent text-[var(--text-muted)] border-[var(--border-hairline)]'
-                }`}
+                  }`}
               >
                 {step > s ? <Check className="w-3 h-3" /> : s}
               </span>
@@ -3662,11 +3649,10 @@ const RsvpSection: React.FC<{
                     key={evt.id}
                     type="button"
                     onClick={() => toggleEventSelection(evt.name)}
-                    className={`w-full text-left p-3.5 rounded-[10px] border transition-all flex items-center justify-between cursor-pointer ${
-                      checked
-                        ? 'bg-[var(--badge-bg)]/60 border-[var(--name-color)] shadow-xs'
-                        : 'bg-[var(--card-bg)] border-[var(--border-hairline)] hover:border-[var(--gold-line)]'
-                    }`}
+                    className={`w-full text-left p-3.5 rounded-[10px] border transition-all flex items-center justify-between cursor-pointer ${checked
+                      ? 'bg-[var(--badge-bg)]/60 border-[var(--name-color)] shadow-xs'
+                      : 'bg-[var(--card-bg)] border-[var(--border-hairline)] hover:border-[var(--gold-line)]'
+                      }`}
                   >
                     <div>
                       <p className="font-serif text-base sm:text-lg text-[var(--text-main)] font-medium">
@@ -3678,11 +3664,10 @@ const RsvpSection: React.FC<{
                     </div>
 
                     <span
-                      className={`w-5 h-5 rounded-[4px] flex items-center justify-center border transition-colors ${
-                        checked
-                          ? 'bg-[var(--cta-bg)] border-[var(--cta-bg)] text-white'
-                          : 'border-[var(--gold-line)] bg-white/60'
-                      }`}
+                      className={`w-5 h-5 rounded-[4px] flex items-center justify-center border transition-colors ${checked
+                        ? 'bg-[var(--cta-bg)] border-[var(--cta-bg)] text-white'
+                        : 'border-[var(--gold-line)] bg-white/60'
+                        }`}
                     >
                       {checked && <Check className="w-3.5 h-3.5" />}
                     </span>
@@ -4030,8 +4015,8 @@ const EditInvitationDrawer: React.FC<{
       name: 'New Celebration',
       date: 'NOVEMBER 26, 2026',
       time: '5:00 PM onwards',
-      venueAddress: 'Mayur Vihar, New Delhi',
-      dressCode: 'Traditional',
+      venueAddress: 'Mayur Vihar, Patparganj, New Delhi',
+
       mapLink: 'https://www.google.com/maps',
     };
     setInvite((prev) => ({
@@ -4137,11 +4122,10 @@ const EditInvitationDrawer: React.FC<{
                   key={key}
                   type="button"
                   onClick={() => setActiveTab(key)}
-                  className={`px-3 py-1.5 rounded-[6px] font-label text-[9px] tracking-[0.2em] uppercase whitespace-nowrap transition-colors cursor-pointer ${
-                    activeTab === key
-                      ? 'bg-[var(--cta-bg)] text-white font-semibold'
-                      : 'text-[var(--text-muted)] hover:bg-[var(--badge-bg)]'
-                  }`}
+                  className={`px-3 py-1.5 rounded-[6px] font-label text-[9px] tracking-[0.2em] uppercase whitespace-nowrap transition-colors cursor-pointer ${activeTab === key
+                    ? 'bg-[var(--cta-bg)] text-white font-semibold'
+                    : 'text-[var(--text-muted)] hover:bg-[var(--badge-bg)]'
+                    }`}
                 >
                   {label}
                 </button>
@@ -4163,11 +4147,10 @@ const EditInvitationDrawer: React.FC<{
                         onClick={() =>
                           setInvite((prev) => ({ ...prev, theme: 'blushRose' }))
                         }
-                        className={`p-3 rounded-[10px] border text-left transition-all cursor-pointer ${
-                          invite.theme === 'blushRose'
-                            ? 'border-[#B5586B] bg-[#FFF8F3] ring-2 ring-[#B5586B]/25'
-                            : 'border-[var(--border-hairline)] bg-white/70'
-                        }`}
+                        className={`p-3 rounded-[10px] border text-left transition-all cursor-pointer ${invite.theme === 'blushRose'
+                          ? 'border-[#B5586B] bg-[#FFF8F3] ring-2 ring-[#B5586B]/25'
+                          : 'border-[var(--border-hairline)] bg-white/70'
+                          }`}
                       >
                         <div className="flex items-center gap-1.5 mb-2">
                           <span className="w-4 h-4 rounded-full bg-[#F6DCD6] border border-[#D8B988]" />
@@ -4190,11 +4173,10 @@ const EditInvitationDrawer: React.FC<{
                             theme: 'classicCream',
                           }))
                         }
-                        className={`p-3 rounded-[10px] border text-left transition-all cursor-pointer ${
-                          invite.theme === 'classicCream'
-                            ? 'border-[#B58B66] bg-[#FCFAF6] ring-2 ring-[#B58B66]/25'
-                            : 'border-[var(--border-hairline)] bg-white/70'
-                        }`}
+                        className={`p-3 rounded-[10px] border text-left transition-all cursor-pointer ${invite.theme === 'classicCream'
+                          ? 'border-[#B58B66] bg-[#FCFAF6] ring-2 ring-[#B58B66]/25'
+                          : 'border-[var(--border-hairline)] bg-white/70'
+                          }`}
                       >
                         <div className="flex items-center gap-1.5 mb-2">
                           <span className="w-4 h-4 rounded-full bg-[#F5EFE4] border border-[#C9A57C]" />
@@ -4726,11 +4708,10 @@ const EditInvitationDrawer: React.FC<{
                               eventsLayout: lay,
                             }))
                           }
-                          className={`py-2 px-2 rounded-[6px] font-label text-[8.5px] tracking-[0.18em] uppercase border cursor-pointer ${
-                            invite.eventsLayout === lay
-                              ? 'bg-[var(--cta-bg)] text-white border-[var(--cta-bg)]'
-                              : 'bg-[var(--card-bg)] border-[var(--border-hairline)] text-[var(--text-muted)]'
-                          }`}
+                          className={`py-2 px-2 rounded-[6px] font-label text-[8.5px] tracking-[0.18em] uppercase border cursor-pointer ${invite.eventsLayout === lay
+                            ? 'bg-[var(--cta-bg)] text-white border-[var(--cta-bg)]'
+                            : 'bg-[var(--card-bg)] border-[var(--border-hairline)] text-[var(--text-muted)]'
+                            }`}
                         >
                           {lay}
                         </button>
@@ -5464,14 +5445,7 @@ export default function App() {
               <span>{invite.labels.saveTheDateTag} (.ICS)</span>
             </button>
 
-            <button
-              type="button"
-              onClick={() => setIsOpened(false)}
-              className="inline-flex items-center gap-1.5 px-4 py-2.5 rounded-full bg-[var(--card-bg)]/80 border border-[var(--border-hairline)] font-label text-[9px] tracking-[0.24em] uppercase text-[var(--text-muted)] hover:text-[var(--text-main)] transition-colors cursor-pointer"
-            >
-              <RotateCcw className="w-3 h-3" />
-              <span>Replay Envelope</span>
-            </button>
+
           </div>
         </section>
 
@@ -5610,27 +5584,7 @@ export default function App() {
                 {invite.labels.eventsSubtitle}
               </p>
 
-              {/* Subtle Layout Switcher Pills */}
-              <div className="inline-flex items-center gap-1 p-1 rounded-full bg-[var(--badge-bg)]/60 border border-[var(--gold-line)]/50 mt-4">
-                {(
-                  ['timeline', 'accordion', 'grid', 'minimal'] as const
-                ).map((lay) => (
-                  <button
-                    key={lay}
-                    type="button"
-                    onClick={() =>
-                      setInvite((prev) => ({ ...prev, eventsLayout: lay }))
-                    }
-                    className={`px-3 py-1 rounded-full font-label text-[8.5px] tracking-[0.2em] uppercase transition-colors cursor-pointer ${
-                      invite.eventsLayout === lay
-                        ? 'bg-[var(--cta-bg)] text-white font-semibold shadow-2xs'
-                        : 'text-[var(--text-muted)] hover:text-[var(--text-main)]'
-                    }`}
-                  >
-                    {lay}
-                  </button>
-                ))}
-              </div>
+
             </div>
 
             <EventsDisplay
@@ -5789,7 +5743,7 @@ export default function App() {
                     e.stopPropagation();
                     setLightboxIndex(
                       (lightboxIndex - 1 + invite.gallery.length) %
-                        invite.gallery.length
+                      invite.gallery.length
                     );
                   }}
                   className="absolute left-4 p-2.5 rounded-full bg-white/15 text-white hover:bg-white/25 cursor-pointer"
