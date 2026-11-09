@@ -5434,19 +5434,7 @@ export default function App() {
             tilt={tilt}
           />
 
-          {/* Quick Save the Date Action Row Below Poster */}
-          <div className="mt-5 flex flex-wrap items-center justify-center gap-3">
-            <button
-              type="button"
-              onClick={() => downloadIcsFile(invite)}
-              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-[var(--card-bg)] border border-[var(--gold-line)] shadow-xs font-label text-[9.5px] tracking-[0.26em] uppercase text-[var(--text-main)] hover:bg-[var(--badge-bg)] transition-colors cursor-pointer"
-            >
-              <Calendar className="w-3.5 h-3.5 text-[var(--name-color)]" />
-              <span>{invite.labels.saveTheDateTag} (.ICS)</span>
-            </button>
 
-
-          </div>
         </section>
 
         {/* Ornamental Floral Vine Section Divider */}
