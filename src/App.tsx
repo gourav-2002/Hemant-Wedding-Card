@@ -1,4 +1,4 @@
-/**
+﻿/**
  * @license
  * SPDX-License-Identifier: Apache-2.0
  */
@@ -26,6 +26,7 @@ import {
   Phone,
   Calendar,
   Settings,
+  Sparkles,
   X,
   Plus,
   Trash2,
@@ -5439,6 +5440,45 @@ export default function App() {
 
         {/* Ornamental Floral Vine Section Divider */}
         <FloralCluster placement="divider" />
+
+        {/* SECTION: BLESSINGS OF OUR ELDERS */}
+<motion.section
+  initial={{ opacity: 0, y: 24 }}
+  whileInView={{ opacity: 1, y: 0 }}
+  viewport={{ once: true, margin: '-60px' }}
+  transition={{ duration: 0.65 }}
+>
+  <OrnateCard showFloralCorners>
+    <div className="text-center py-4 max-w-xl mx-auto space-y-4">
+      {/* Small Header Icon */}
+      <div className="flex justify-center text-[var(--d4af37)] mb-2">
+        <Sparkles className="w-5 h-5 opacity-80" />
+      </div>
+
+      {/* Section Sub-heading */}
+      <p className="font-label text-[9.5px] sm:text-[10.5px] tracking-[0.32em] uppercase text-[var(--d4af37)] font-semibold">
+        With the Blessings of Our Elders
+      </p>
+
+      {/* Divine Intro Line */}
+      <p className="font-serif italic text-xs sm:text-sm text-[var(--text-main)]/80 leading-relaxed max-w-md mx-auto">
+        With the divine blessings and infinite grace of the Almighty,
+      </p>
+
+      <LotusDividerSvg className="my-4 opacity-75" />
+
+      {/* Main Announcement & Elders' Names */}
+      <div className="space-y-2">
+        <p className="font-serif text-lg sm:text-2xl text-[var(--text-main)] font-medium leading-snug">
+          Mrs. Triveni Mangla <span className="text-[var(--d4af37)] font-sans text-sm">&amp;</span> Late Shri Nanak Chand
+        </p>
+        <p className="font-serif text-xs sm:text-sm text-[var(--text-main)]/85 leading-relaxed pt-1">
+          cordially invite you to the engagement ceremony of their beloved grandson
+        </p>
+      </div>
+    </div>
+  </OrnateCard>
+</motion.section>
 
         {/* SECTION 2: THE COUPLE (Arch Portraits + Floral Sprigs + Our Story) */}
         <motion.section
